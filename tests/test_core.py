@@ -1,7 +1,6 @@
 """Tests for cosmic_web.core."""
 
 import networkx as nx
-import pytest
 
 from cosmic_web.core import build_cosmic_web, emergence_metrics, simulate_emergence
 

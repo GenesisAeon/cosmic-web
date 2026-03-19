@@ -21,7 +21,7 @@ console = Console()
 
 @app.command()
 def render(
-    nodes: int = typer.Option(50, help="Number of nodes (entropy gates / cosmic moments)"),
+    nodes: int = typer.Option(50, help="Number of nodes (entropy gates / moments)"),
     edges: int = typer.Option(100, help="Target number of edges (relations)"),
     seed: int = typer.Option(42, help="Random seed for reproducibility"),
 ) -> None:

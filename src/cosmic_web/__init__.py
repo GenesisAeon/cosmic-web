@@ -1,4 +1,4 @@
-"""cosmic-web – relational network of entropy gates, cosmic moments, mandala nodes and emergence visualization."""
+"""cosmic-web – entropy gates, cosmic moments and emergence visualization."""
 
 __version__ = "0.1.0"
 

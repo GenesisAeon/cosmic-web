@@ -25,15 +25,19 @@ def _build_network_figure(G: nx.Graph) -> go.Figure:
     edge_trace = go.Scatter(
         x=edge_x,
         y=edge_y,
-        line=dict(width=0.5, color="#555"),
+        line={"width": 0.5, "color": "#555"},
         hoverinfo="none",
         mode="lines",
     )
 
-    node_x = [pos[n][0] for n in G.nodes()]
-    node_y = [pos[n][1] for n in G.nodes()]
-    emergence_vals = [G.nodes[n]["emergence"] for n in G.nodes()]
-    node_text = [f"Node {n}<br>emergence={G.nodes[n]['emergence']:.3f}" for n in G.nodes()]
+    node_x, node_y, emergence_vals, node_text = [], [], [], []
+    for n in G.nodes():
+        x, y = pos[n]
+        em = G.nodes[n]["emergence"]
+        node_x.append(x)
+        node_y.append(y)
+        emergence_vals.append(em)
+        node_text.append(f"Node {n}<br>emergence={em:.3f}")
 
     node_trace = go.Scatter(
         x=node_x,
@@ -41,13 +45,13 @@ def _build_network_figure(G: nx.Graph) -> go.Figure:
         mode="markers",
         hoverinfo="text",
         text=node_text,
-        marker=dict(
-            size=8,
-            color=emergence_vals,
-            colorscale="Viridis",
-            showscale=True,
-            colorbar=dict(title="Emergence"),
-        ),
+        marker={
+            "size": 8,
+            "color": emergence_vals,
+            "colorscale": "Viridis",
+            "showscale": True,
+            "colorbar": {"title": "Emergence"},
+        },
     )
 
     return go.Figure(
@@ -56,12 +60,12 @@ def _build_network_figure(G: nx.Graph) -> go.Figure:
             title="Cosmic Web – Emergence Network",
             showlegend=False,
             hovermode="closest",
-            margin=dict(b=20, l=5, r=5, t=40),
-            xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-            yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+            margin={"b": 20, "l": 5, "r": 5, "t": 40},
+            xaxis={"showgrid": False, "zeroline": False, "showticklabels": False},
+            yaxis={"showgrid": False, "zeroline": False, "showticklabels": False},
             paper_bgcolor="#0a0a1a",
             plot_bgcolor="#0a0a1a",
-            font=dict(color="#e0e0ff"),
+            font={"color": "#e0e0ff"},
         ),
     )
 
@@ -103,18 +107,26 @@ def create_cosmic_web_dashboard(nodes: int = 50, edges: int = 100) -> Dash:
         template="plotly_dark",
     )
 
+    summary = (
+        f"Nodes: {G.number_of_nodes()} | Edges: {G.number_of_edges()} | "
+        f"Avg Emergence: {metrics['emergence'].mean():.3f}"
+    )
+
     app.layout = html.Div(
-        style={"backgroundColor": "#0a0a1a", "color": "#e0e0ff", "fontFamily": "monospace"},
+        style={
+            "backgroundColor": "#0a0a1a",
+            "color": "#e0e0ff",
+            "fontFamily": "monospace",
+        },
         children=[
             html.H1(
-                "🌌 Cosmic Web – Emergence Network",
+                "Cosmic Web – Emergence Network",
                 style={"textAlign": "center", "padding": "20px"},
             ),
             html.Div(
                 [
                     html.P(
-                        f"Nodes: {G.number_of_nodes()} | Edges: {G.number_of_edges()} | "
-                        f"Avg Emergence: {metrics['emergence'].mean():.3f}",
+                        summary,
                         style={"textAlign": "center", "color": "#88aaff"},
                     )
                 ]

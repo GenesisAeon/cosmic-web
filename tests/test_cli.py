@@ -37,5 +37,7 @@ def test_simulate_steps_count():
     result = runner.invoke(app, ["simulate", "--nodes", "20", "--steps", "4"])
     assert result.exit_code == 0
     # Should show 4 step lines
-    step_lines = [line for line in result.output.splitlines() if line.strip().startswith("step")]
+    step_lines = [
+        line for line in result.output.splitlines() if line.strip().startswith("step")
+    ]
     assert len(step_lines) == 4
