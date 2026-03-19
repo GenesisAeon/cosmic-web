@@ -1,0 +1,57 @@
+# cosmic-web domain registry
+# Describes the relational topology of the GenesisAeon stack layer.
+
+domain: cosmic-web
+version: "0.1.0"
+description: >
+  The cosmic web – relational network of entropy gates, cosmic moments,
+  mandala nodes and emergence visualization for the GenesisAeon stack.
+
+nodes:
+  - id: entropy-gate
+    type: gate
+    description: Entropy transition point in the field
+    emergence: 0.87
+
+  - id: cosmic-moment
+    type: moment
+    description: Singular event node in the temporal graph
+    emergence: 0.72
+
+  - id: mandala-node
+    type: visual
+    description: Fractal visual anchor in the network
+    emergence: 0.65
+
+  - id: field-junction
+    type: junction
+    description: Field-theory intersection point
+    emergence: 0.91
+
+edges:
+  - source: entropy-gate
+    target: cosmic-moment
+    weight: 0.8
+    relation: temporal-transition
+
+  - source: cosmic-moment
+    target: mandala-node
+    weight: 0.6
+    relation: visual-emergence
+
+  - source: mandala-node
+    target: field-junction
+    weight: 0.75
+    relation: field-binding
+
+  - source: field-junction
+    target: entropy-gate
+    weight: 0.9
+    relation: entropic-feedback
+
+stack_bindings:
+  mirror-machine: phase-transitions-as-nodes
+  climate-dashboard: ui-integration
+  sonification: audio-from-edges
+  mandala-visualizer: fractal-node-render
+  entropy-table: domain-registry
