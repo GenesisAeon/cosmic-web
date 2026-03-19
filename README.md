@@ -1,84 +1,90 @@
-# diamond-setup
+# cosmic-web
 
-**Universal Python project scaffold** — generate professional, CI-ready skeletons in seconds.
+**The cosmic web** – relational network of entropy gates, cosmic moments, mandala nodes and
+emergence visualization for the GenesisAeon stack.
 
-[![CI](https://github.com/GenesisAeon/diamond-setup/actions/workflows/ci.yml/badge.svg)](https://github.com/GenesisAeon/diamond-setup/actions/workflows/ci.yml)
+[![CI](https://github.com/GenesisAeon/cosmic-web/actions/workflows/ci.yml/badge.svg)](https://github.com/GenesisAeon/cosmic-web/actions/workflows/ci.yml)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue)](https://www.python.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-
-No cookiecutter, no Jinja2, no magic. Just a clean CLI that produces a fully working project — `uv sync`, `pytest`, ruff, pre-commit and CI all wired up from second one.
+[![PyPI](https://img.shields.io/pypi/v/cosmic-web)](https://pypi.org/project/cosmic-web/)
 
 ---
 
 ## Install
 
 ```bash
-pip install diamond-setup
+pip install cosmic-web
 # or
-uv tool install diamond-setup
+uv tool install cosmic-web
+
+# With full GenesisAeon stack bindings
+pip install "cosmic-web[stack]"
 ```
 
-## Usage
+## Quick start
 
 ```bash
-# New project with the minimal template (default)
-diamond scaffold my-lib
+# Render emergence metrics for a 50-node cosmic web
+cweb render --nodes 50 --edges 100
 
-# GenesisAeon preset (adds domains.yaml + entropy-table bridge)
-diamond scaffold my-physics-tool --template genesis --author "Ada Lovelace"
+# Simulate emergent propagation (5 steps, 30 nodes)
+cweb simulate --nodes 30 --steps 5
 
-# Preview what would be generated (no files written)
-diamond scaffold my-lib --dry-run
-
-# See all templates
-diamond list-templates
-
-# Validate any project directory
-diamond validate path/to/my-project
-diamond validate          # validates the current directory
+# Launch interactive Plotly/Dash dashboard
+cweb dashboard --port 8050
 ```
 
-## What you get
+## Python API
 
-Running `diamond scaffold my-lib` produces:
+```python
+from cosmic_web import build_cosmic_web, emergence_metrics
+from cosmic_web.core import simulate_emergence
 
-```
-my-lib/
-├── src/
-│   └── my_lib/
-│       └── __init__.py       # __version__ = "0.1.0"
-├── tests/
-│   ├── __init__.py
-│   └── test_main.py
-├── .github/
-│   └── workflows/
-│       └── ci.yml            # matrix: 3.11 + 3.12
-├── pyproject.toml            # hatchling, ruff, pytest configured
-├── README.md
-├── .gitignore
-└── .pre-commit-config.yaml   # ruff + standard hooks
+G = build_cosmic_web(nodes=50, edges=100, seed=42)
+metrics = emergence_metrics(G)
+print(metrics.head())
+
+history = simulate_emergence(G, steps=10)
 ```
 
-Then just:
+## Architecture
 
-```bash
-cd my-lib
-uv sync --dev
-pre-commit install
-uv run pytest
+```
+cosmic-web/
+├── src/cosmic_web/
+│   ├── core.py                  # CosmicWebGraph + emergence simulation
+│   ├── app.py                   # Plotly/Dash interactive dashboard
+│   ├── cli.py                   # CLI: cweb render | simulate | dashboard
+│   └── entropy_table_bridge.py  # Optional bridge to entropy-table [stack]
+├── domains.yaml                 # Domain topology registry
+└── tests/
+    ├── test_core.py
+    └── test_cli.py
 ```
 
-## Templates
+## Stack bindings (`[stack]`)
 
-| Template | Description |
-|----------|-------------|
-| `minimal` | Clean Python package for everyone |
-| `genesis` | Adds `domains.yaml` + entropy-table bridge (GenesisAeon preset) |
+| Layer | Binding |
+|-------|---------|
+| `mirror-machine` | Phase-transitions as nodes |
+| `climate-dashboard` | UI integration |
+| `sonification` | Audio from edges |
+| `mandala-visualizer` | Fractal node rendering |
+| `entropy-table` | Domain registry |
+| `fieldtheory` | Unified field topology |
 
-## Extending
+## CLI reference
 
-Adding a new template is one Python file. See [docs/templates.md](docs/templates.md).
+| Command | Description |
+|---------|-------------|
+| `cweb render` | Print emergence metrics table |
+| `cweb simulate` | Run emergence diffusion simulation |
+| `cweb dashboard` | Launch interactive web dashboard |
+| `cweb version` | Show version |
 
 ---
 
-Built with [uv](https://docs.astral.sh/uv/) · [Typer](https://typer.tiangolo.com/) · [Rich](https://rich.readthedocs.io/)
+**DOI** (after Zenodo release): 10.5281/zenodo.XXXXXXX
+
+Built with [NetworkX](https://networkx.org/) · [Plotly](https://plotly.com/) ·
+[Dash](https://dash.plotly.com/) · [Typer](https://typer.tiangolo.com/) · [Rich](https://rich.readthedocs.io/)
