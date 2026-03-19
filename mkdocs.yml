@@ -1,8 +1,8 @@
-site_name: Diamond Setup
-site_description: Universal Python project scaffold — generate professional project skeletons in seconds
+site_name: cosmic-web
+site_description: The Cosmic Web Relational Network — Barabási–Albert graph + emergence simulation for the GenesisAeon stack
 site_author: GenesisAeon
-repo_url: https://github.com/GenesisAeon/diamond-setup
-repo_name: GenesisAeon/diamond-setup
+repo_url: https://github.com/GenesisAeon/cosmic-web
+repo_name: GenesisAeon/cosmic-web
 
 theme:
   name: material
@@ -36,8 +36,10 @@ markdown_extensions:
   - pymdownx.superfences
   - pymdownx.tabbed:
       alternate_style: true
+  - pymdownx.snippets:
+      base_path: .
 
 nav:
   - Home: index.md
   - CLI Reference: cli.md
-  - Templates: templates.md
+  - Changelog: changelog.md

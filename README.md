@@ -84,7 +84,10 @@ cosmic-web/
 
 ---
 
-**DOI** (after Zenodo release): 10.5281/zenodo.XXXXXXX
+**DOI**: [10.5281/zenodo.19108819](https://doi.org/10.5281/zenodo.19108819)
+**PyPI**: `pip install cosmic-web` (oder `pip install "cosmic-web[stack]"` für den vollen GenesisAeon-Stack)
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19108819.svg)](https://doi.org/10.5281/zenodo.19108819)
 
 Built with [NetworkX](https://networkx.org/) · [Plotly](https://plotly.com/) ·
 [Dash](https://dash.plotly.com/) · [Typer](https://typer.tiangolo.com/) · [Rich](https://rich.readthedocs.io/)
