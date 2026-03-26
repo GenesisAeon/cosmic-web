@@ -1,4 +1,4 @@
-﻿[project]
+[project]
 name = "cosmic-web"
 version = "0.3.1"
 description = "The cosmic web layer for the GenesisAeon stack â€“ relational network of entropy gates, cosmic moments, mandala nodes and emergence visualization."
