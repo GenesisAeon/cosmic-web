@@ -20,7 +20,7 @@ def test_particle_count_adjusted_to_cube():
     sim = CosmicWebSimulator(N=10000, box_size=100.0)
     # cbrt(10000) ≈ 21.54 → n1d=22 → N=22³=10648 OR n1d=21 → 9261
     n1d = round(10000 ** (1 / 3))
-    assert sim.N == n1d ** 3
+    assert n1d ** 3 == sim.N
 
 
 def test_positions_within_box(sim_small):

@@ -17,7 +17,6 @@ Reference cosmology defaults: Planck 2018 (Aghanim et al. 2020).
 from __future__ import annotations
 
 import numpy as np
-from typing import Optional
 
 
 class CosmicWebSimulator:
@@ -57,7 +56,7 @@ class CosmicWebSimulator:
         self,
         N: int = 10000,
         box_size: float = 100.0,
-        n_mesh: Optional[int] = None,
+        n_mesh: int | None = None,
         omega_m: float = 0.3111,
         omega_lambda: float = 0.6889,
         h: float = 0.6766,
@@ -400,7 +399,7 @@ class CosmicWebSimulator:
         a = self.a
         da = (a_end - a) / steps
 
-        for step in range(steps):
+        for _step in range(steps):
             a_mid = a + 0.5 * da
             H_mid = self._hubble(a_mid)
 
