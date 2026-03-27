@@ -79,3 +79,24 @@ addopts = "--cov=src --cov-report=term-missing -v"
 source = ["src"]
 omit = ["tests/*"]
 
+[tool.mypy]
+python_version = "3.11"
+strict = false
+
+[[tool.mypy.overrides]]
+module = [
+    "networkx",
+    "networkx.*",
+    "pandas",
+    "pandas.*",
+    "plotly",
+    "plotly.*",
+    "dash",
+    "dash.*",
+    "typer",
+    "typer.*",
+    "rich",
+    "rich.*",
+]
+ignore_missing_imports = true
+
