@@ -82,12 +82,29 @@ cosmic-web/
 | `cweb dashboard` | Launch interactive web dashboard |
 | `cweb version` | Show version |
 
----
+## Role in the GenesisAeon Ecosystem
+
+`cosmic-web` (**P-COSMICWEB**) is the cosmic-web / GADGET-4 benchmark layer
+of the GenesisAeon stack: it provides the relational network — entropy
+gates, cosmic moments, and mandala nodes — over which emergence is
+simulated and visualized, and bridges into the rest of the ecosystem
+(`mirror-machine`, `climate-dashboard`, `sonification`, `entropy-table`,
+`fieldtheory`) via its optional `[stack]` extra.
+
+## Citation
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.PLACEHOLDER.svg)](https://doi.org/10.5281/zenodo.PLACEHOLDER)
+
+DOI will be assigned automatically on first GitHub Release once
+Zenodo–GitHub integration is enabled for this repo.
+
+This package is also part of a broader published record:
 
 **DOI**: [10.5281/zenodo.19108819](https://doi.org/10.5281/zenodo.19108819)
-**PyPI**: `pip install cosmic-web` (oder `pip install "cosmic-web[stack]"` für den vollen GenesisAeon-Stack)
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19108819.svg)](https://doi.org/10.5281/zenodo.19108819)
+
+---
 
 Built with [NetworkX](https://networkx.org/) · [Plotly](https://plotly.com/) ·
 [Dash](https://dash.plotly.com/) · [Typer](https://typer.tiangolo.com/) · [Rich](https://rich.readthedocs.io/)

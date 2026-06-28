@@ -1,5 +1,26 @@
 # Changelog
 
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/).
+
+## [Unreleased]
+
+## [1.0.0] - 2026
+### Added
+- Initial v1.0.0 release as part of the GenesisAeon ecosystem-wide 1.0.0
+  milestone.
+- Standardized release tooling: `.zenodo.json`, GitHub Actions release
+  workflow (`.github/workflows/release.yml`), `RELEASE_GUIDE.md`,
+  `CONTRIBUTING.md`, issue/PR templates.
+
+### Changed
+- Project metadata (`pyproject.toml`) normalized: version, license,
+  authors, `requires-python`, and GenesisAeon-ecosystem dependency pins
+  bumped to their actual released floors (`entropy-table>=2.0.0`,
+  `implosive-genesis>=1.0.0`, and other stack bindings to `>=1.0.0`).
+
 ## v0.1.0 (2026-03-19)
 
 - Initial release: kosmisches Netz mit Barabási–Albert-Power-Law-Graph + Emergenz-Simulation

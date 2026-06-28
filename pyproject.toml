@@ -1,7 +1,7 @@
 [project]
 name = "cosmic-web"
-version = "0.3.1"
-description = "The cosmic web layer for the GenesisAeon stack â€“ relational network of entropy gates, cosmic moments, mandala nodes and emergence visualization."
+version = "1.0.0"
+description = "The cosmic web layer for the GenesisAeon stack - relational network of entropy gates, cosmic moments, mandala nodes and emergence visualization."
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
@@ -30,18 +30,18 @@ dependencies = [
 
 [project.optional-dependencies]
 stack = [
-    "mirror-machine>=0.1.0",
-    "climate-dashboard>=0.1.0",
-    "sonification>=0.0.10",
+    "mirror-machine>=1.0.0",
+    "climate-dashboard>=1.0.0",
+    "sonification>=1.0.0",
     "mandala-visualizer>=0.1.0",
-    "utac-core>=0.1.0",
-    "sigillin>=0.1.0",
-    "fieldtheory>=0.1.0",
-    "cosmic-moment>=0.1.0",
-    "medium-modulation>=0.1.0",
-    "entropy-governance>=0.1.0",
-    "entropy-table>=1.0.1",
-    "implosive-genesis>=0.4.0",
+    "utac-core>=1.0.0",
+    "sigillin>=1.0.0",
+    "fieldtheory>=1.0.0",
+    "cosmic-moment>=1.0.0",
+    "medium-modulation>=1.0.0",
+    "entropy-governance>=1.0.0",
+    "entropy-table>=2.0.0",
+    "implosive-genesis>=1.0.0",
 ]
 dev = ["pytest>=8.0", "pytest-cov>=5.0", "ruff>=0.9", "mypy>=1.0"]
 docs = ["mkdocs>=1.6", "mkdocstrings[python]>=0.27", "mkdocs-material>=9.6"]
