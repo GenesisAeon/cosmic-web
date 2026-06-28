@@ -4,10 +4,13 @@ on:
   push:
     tags:
       - "v*.*.*"
+      - "v*.*.*-rc*"
+      - "v*.*.*-alpha*"
+      - "v*.*.*-beta*"
 
 permissions:
   contents: write
-  id-token: write
+  id-token: write   # for PyPI trusted publishing, if configured
 
 jobs:
   build:
@@ -17,63 +20,99 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
-      - name: Install build tools
-        run: pip install build
-      - name: Build wheel and sdist
+          python-version: "3.12"
+
+      - name: Install build tooling
+        run: python -m pip install --upgrade pip build
+
+      - name: Build sdist and wheel
         run: python -m build
-      - name: Upload artifacts
+
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: dist
           path: dist/
 
-  publish-pypi:
-    name: Publish to PyPI
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: pypi
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist/
-      - name: Publish to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-
-  github-release:
-    name: Create GitHub Release
-    needs: publish-pypi
+  test:
+    name: Run test suite
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install package with dev/test extras
+        run: |
+          python -m pip install --upgrade pip
+          if python -c "import tomllib" 2>/dev/null; then :; fi
+          pip install -e ".[dev]" 2>/dev/null || pip install -e ".[test]" 2>/dev/null || pip install -e "."
+          pip install pytest pytest-cov
+
+      - name: Run tests
+        run: pytest -q || pytest -q --no-header
+
+  publish-canary:
+    name: Publish canary (TestPyPI + pre-release)
+    needs: [build, test]
+    if: contains(github.ref_name, '-rc') || contains(github.ref_name, '-alpha') || contains(github.ref_name, '-beta')
+    runs-on: ubuntu-latest
+    environment: testpypi
+    steps:
       - uses: actions/download-artifact@v4
         with:
           name: dist
           path: dist/
+
+      - name: Publish to TestPyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+          skip-existing: true
+
+      - name: Create GitHub pre-release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          prerelease: true
+          generate_release_notes: true
+
+  publish-production:
+    name: Publish production (PyPI + release + Zenodo archive)
+    needs: [build, test]
+    if: ${{ !contains(github.ref_name, '-rc') && !contains(github.ref_name, '-alpha') && !contains(github.ref_name, '-beta') }}
+    runs-on: ubuntu-latest
+    environment: pypi
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}
+          skip-existing: true
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: dist/*
+          prerelease: false
           generate_release_notes: true
-          draft: false
-          prerelease: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'rc') }}
 
-  publish-zenodo:
-    name: Publish to Zenodo
-    needs: github-release
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Upload to Zenodo
-        run: |
-          echo "Zenodo upload triggered for tag ${{ github.ref_name }}"
-          echo "Configure ZENODO_TOKEN secret and zenodraft/action for automatic upload."
-        # Replace with actual zenodo-upload action when token is configured:
-        # uses: zenodraft/action@main
-        # with:
-        #   concept-doi: 10.5281/zenodo.XXXXXXXX  # <- enter your concept DOI
-        #   token: ${{ secrets.ZENODO_TOKEN }}
+      # NOTE: Zenodo archival of this GitHub Release happens automatically
+      # IF this repo has Zenodo-GitHub integration enabled at
+      # https://zenodo.org/account/settings/github/ (a per-repo, per-owner
+      # OAuth toggle on zenodo.org — cannot be set from a workflow file).
+      # Once enabled, every GitHub Release like this one mints/updates a
+      # Zenodo DOI automatically using the .zenodo.json metadata in this repo.
