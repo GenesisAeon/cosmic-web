@@ -1,9 +1,9 @@
-"""Tests for genesis_os.universums_sim.CosmicWebSimulator."""
+"""Tests for cosmic_web.universums_sim.CosmicWebSimulator."""
 
 import numpy as np
 import pytest
 
-from genesis_os.universums_sim import CosmicWebSimulator
+from cosmic_web.universums_sim import CosmicWebSimulator
 
 
 @pytest.fixture(scope="module")

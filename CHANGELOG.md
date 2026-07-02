@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-07-01
+
+### Fixed
+- **Breaking namespace collision:** removed `genesis_os/` from the wheel — it
+  overwrote `genesis-os` when both were installed via `genesis-os[full-stack]`,
+  breaking `from genesis_os import GenesisOS`.
+- Moved `CosmicWebSimulator` (PM N-body) to `cosmic_web.universums_sim`; re-export
+  from `cosmic_web` top-level.
+
 ## [1.0.0] - 2026
 ### Added
 - Initial v1.0.0 release as part of the GenesisAeon ecosystem-wide 1.0.0

@@ -16,7 +16,7 @@ in the repository).
 
 import numpy as np
 import matplotlib.pyplot as plt
-from genesis_os import universums_sim  # CosmicWeb simulator
+from cosmic_web import universums_sim  # N-body PM simulator
 
 # Reproducible run
 np.random.seed(42)

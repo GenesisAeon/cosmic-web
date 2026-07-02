@@ -1,5 +1,5 @@
 """
-genesis_os.universums_sim
+cosmic_web.universums_sim
 =========================
 
 N-body + field-theory cosmological simulator for large-scale structure.
