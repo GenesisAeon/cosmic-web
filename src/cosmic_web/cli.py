@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+import io
+import sys
+
 import typer
 from rich.console import Console
 from rich.panel import Panel
@@ -9,6 +12,15 @@ from rich.table import Table
 
 from . import __version__
 from .core import build_cosmic_web, emergence_metrics, simulate_emergence
+
+# Windows consoles default to a non-UTF-8 codepage, which breaks the em-dash
+# and approx-equal symbols used in this CLI's output with
+# UnicodeEncodeError. Force UTF-8 stdout/stderr so behavior matches
+# Linux/macOS terminals.
+if isinstance(sys.stdout, io.TextIOWrapper):
+    sys.stdout.reconfigure(encoding="utf-8")
+if isinstance(sys.stderr, io.TextIOWrapper):
+    sys.stderr.reconfigure(encoding="utf-8")
 
 app = typer.Typer(
     name="cweb",
@@ -54,7 +66,8 @@ def render(
     console.print(
         f"\n[bold green]Graph summary:[/bold green] "
         f"{G.number_of_nodes()} nodes, {G.number_of_edges()} edges | "
-        f"avg emergence = [yellow]{metrics['emergence'].mean():.3f}[/yellow]"
+        f"avg emergence = [yellow]{metrics['emergence'].mean():.3f}[/yellow]",
+        highlight=False,
     )
 
 
@@ -97,7 +110,7 @@ def dashboard(
 @app.command()
 def version() -> None:
     """Show cosmic-web version."""
-    console.print(f"cosmic-web [bold]{__version__}[/bold]")
+    console.print(f"cosmic-web [bold]{__version__}[/bold]", highlight=False)
 
 
 if __name__ == "__main__":
