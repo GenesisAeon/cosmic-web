@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import io
 import sys
 
 import typer
@@ -16,8 +17,9 @@ from .core import build_cosmic_web, emergence_metrics, simulate_emergence
 # and approx-equal symbols used in this CLI's output with
 # UnicodeEncodeError. Force UTF-8 stdout/stderr so behavior matches
 # Linux/macOS terminals.
-if hasattr(sys.stdout, "reconfigure"):
+if isinstance(sys.stdout, io.TextIOWrapper):
     sys.stdout.reconfigure(encoding="utf-8")
+if isinstance(sys.stderr, io.TextIOWrapper):
     sys.stderr.reconfigure(encoding="utf-8")
 
 app = typer.Typer(
