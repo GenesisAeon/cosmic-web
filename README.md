@@ -84,7 +84,7 @@ cosmic-web/
 
 ## Role in the GenesisAeon Ecosystem
 
-`cosmic-web` (**P-COSMICWEB**) is the cosmic-web / GADGET-4 benchmark layer
+`cosmic-web` (**P84**, formerly informally **P-COSMICWEB**) is the cosmic-web / GADGET-4 benchmark layer
 of the GenesisAeon stack: it provides the relational network — entropy
 gates, cosmic moments, and mandala nodes — over which emergence is
 simulated and visualized, and bridges into the rest of the ecosystem
